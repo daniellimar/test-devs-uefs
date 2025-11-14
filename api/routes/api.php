@@ -2,33 +2,35 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AuthController;
 
-Route::get('/', function () {
-    return response()->json([
-        'message' => 'API funcionando corretamente',
-    ]);
-});
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::prefix('users')->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::get(
-        '/',
-        [UserController::class, 'index']
-    )->middleware('can:viewAny,App\Models\User');
+    Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::post(
-        '/',
-        [UserController::class, 'store']
-    )->middleware('can:create,App\Models\User');
+    Route::prefix('users')->group(function () {
 
-    Route::put(
-        '/{user}',
-        [UserController::class, 'update']
-    )->middleware('can:update,user');
+        Route::get(
+            '/',
+            [UserController::class, 'index']
+        )->middleware('can:viewAny,App\Models\User');
 
-    Route::delete(
-        '/{user}',
-        [UserController::class, 'destroy']
-    )->middleware('can:delete,user');
+        Route::post(
+            '/',
+            [UserController::class, 'store']
+        )->middleware('can:create,App\Models\User');
 
+        Route::put(
+            '/{user}',
+            [UserController::class, 'update']
+        )->middleware('can:update,user');
+
+        Route::delete(
+            '/{user}',
+            [UserController::class, 'destroy']
+        )->middleware('can:delete,user');
+
+    });
 });

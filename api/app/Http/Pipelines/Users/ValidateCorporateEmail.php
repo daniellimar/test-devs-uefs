@@ -11,7 +11,7 @@ class ValidateCorporateEmail
 
     public function __construct()
     {
-        $this->corporateDomain = config('corporate.domain', 'postflow.com');
+        $this->corporateDomain = config('corporate.domain');
     }
 
     /**
