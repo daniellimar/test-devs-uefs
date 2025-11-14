@@ -12,7 +12,6 @@ class UserController extends Controller
 {
     public function __construct(protected UserService $service)
     {
-        $this->authorizeResource(User::class, 'user');
     }
 
     public function index()

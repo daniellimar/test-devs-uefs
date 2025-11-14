@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace app\Services;
 
+use App\Http\Pipelines\Users\{ClearData,
+    FormatUserName,
+    HashPasswordIfPresent,
+    SetDefaultActiveFlag,
+    ValidateCorporateEmail};
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Pipeline\Pipeline;
-use App\Http\Pipelines\Users\{
-    ClearData,
-    FormatUserName,
-    ValidateCorporateEmail,
-    HashPasswordIfPresent,
-    SetDefaultActiveFlag
-};
 
 class UserService
 {
