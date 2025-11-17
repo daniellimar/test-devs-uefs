@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\{PostController, TagController, UserController, AuthController};
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -33,4 +32,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
         )->middleware('can:delete,user');
 
     });
+});
+
+Route::prefix('posts')->group(function () {
+    Route::get('/', [PostController::class, 'index']);
+    Route::post('/', [PostController::class, 'store']);
+    Route::get('/{post}', [PostController::class, 'show']);
+    Route::put('/{post}', [PostController::class, 'update']);
+    Route::delete('/{post}', [PostController::class, 'destroy']);
+});
+
+Route::prefix('tags')->group(function () {
+    Route::get('/', [TagController::class, 'index']);
+    Route::post('/', [TagController::class, 'store']);
+    Route::put('/{tag}', [TagController::class, 'update']);
+    Route::delete('/{tag}', [TagController::class, 'destroy']);
 });
